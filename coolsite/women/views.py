@@ -1,5 +1,5 @@
-from django.http import HttpResponse, HttpResponseNotFound, Http404
-from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse, HttpResponseNotFound
+from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView
 
 
@@ -93,6 +93,7 @@ def page_not_found(request, exception):
 #
 #     return render(request, 'women/post.html', context=context)
 
+
 class ShowPost(DetailView):
     model = Women
     template_name = 'women/post.html'
@@ -104,6 +105,8 @@ class ShowPost(DetailView):
         context['title'] = context['post']
         context['menu'] = menu
         return context
+
+
 class WomenCategory(ListView):
     model = Women
     template_name = 'women/index.html'
@@ -123,7 +126,7 @@ class WomenCategory(ListView):
 # def show_category(request, cat_slug):
 #     posts = Women.objects.filter(cat__slug=cat_slug)
 #
-#     dict = {'title': 'Отображение по рубрикам',
+#     dict = {'title': 'View by rubric',
 #             'posts': posts,
 #             'menu': menu,
 #             'cat_selected': cat_slug
