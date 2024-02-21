@@ -1,10 +1,12 @@
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 from .forms import AddPostForm
 from .models import *
+from .utils import *
 
 menu = [{'title': 'About site', 'url_name': 'about'},
         {'title': 'Add page', 'url_name': 'add_page'},
@@ -12,17 +14,15 @@ menu = [{'title': 'About site', 'url_name': 'about'},
         {'title': 'Log in', 'url_name': 'login'}]
 
 
-class WomenHome(ListView):
+class WomenHome(DataMixin, ListView):
     model = Women
     template_name = 'women/index.html'
     context_object_name = 'posts'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['menu'] = menu
-        context['title'] = 'Main page'
-        context['cat_selected'] = 0
-        return context
+        c_def = self.get_user_context(title="Main page")
+        return dict(list(context.items()) + list(c_def.items()))
 
     def queryset(self):
         return Women.objects.filter(is_published=True)
@@ -41,15 +41,15 @@ class WomenHome(ListView):
 def about(request):
     return render(request, 'women/about.html', {'menu': menu, 'title': 'About page'})
 
-class AddPage(CreateView):
+class AddPage(LoginRequiredMixin, DataMixin, CreateView):
     form_class = AddPostForm
     template_name = 'women/addpage.html'
+    login_url = '/admin/'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Add Page'
-        context['menu'] = menu
-        return context
+        c_def = self.get_user_context(title="Add page")
+        return dict(list(context.items()) + list(c_def.items()))
 
 
 # def addpage(request):
@@ -94,7 +94,7 @@ def page_not_found(request, exception):
 #     return render(request, 'women/post.html', context=context)
 
 
-class ShowPost(DetailView):
+class ShowPost(DataMixin, DetailView):
     model = Women
     template_name = 'women/post.html'
     slug_url_kwarg = 'post_slug'
@@ -102,12 +102,11 @@ class ShowPost(DetailView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = context['post']
-        context['menu'] = menu
-        return context
+        c_def = self.get_user_context(title=context["post"])
+        return dict(list(context.items()) + list(c_def.items()))
 
 
-class WomenCategory(ListView):
+class WomenCategory(DataMixin, ListView):
     model = Women
     template_name = 'women/index.html'
     context_object_name = 'posts'
@@ -115,10 +114,9 @@ class WomenCategory(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['menu'] = menu
-        context['title'] = 'Category - ' + str(context['posts'][0].cat)
-        context['cat_selected'] = context['posts'][0].cat_id
-        return context
+        c_def = self.get_user_context(title='Category - ' + str(context['posts'][0].cat),
+                                      cat_selected=context['posts'][0].cat_id)
+        return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):
         return Women.objects.filter(cat__slug=self.kwargs['cat_slug'], is_published=True)
