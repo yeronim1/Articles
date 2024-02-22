@@ -5,17 +5,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
 
-from .forms import AddPostForm
+from .forms import *
 from .models import *
 from .utils import *
 
-menu = [{'title': 'About site', 'url_name': 'about'},
-        {'title': 'Add page', 'url_name': 'add_page'},
-        {'title': 'Feedback', 'url_name': 'contact'},
-        {'title': 'Log in', 'url_name': 'login'}]
-
-
 class WomenHome(DataMixin, ListView):
+    paginate_by = 3
     model = Women
     template_name = 'women/index.html'
     context_object_name = 'posts'
@@ -25,7 +20,7 @@ class WomenHome(DataMixin, ListView):
         c_def = self.get_user_context(title="Main page")
         return dict(list(context.items()) + list(c_def.items()))
 
-    def queryset(self):
+    def get_queryset(self):
         return Women.objects.filter(is_published=True)
 
 # def index(request):
@@ -47,6 +42,7 @@ class AddPage(LoginRequiredMixin, DataMixin, CreateView):
     template_name = 'women/addpage.html'
     success_url = reverse_lazy('home')
     login_url = reverse_lazy('home')
+    raise_exception = True
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
