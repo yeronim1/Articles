@@ -66,15 +66,17 @@
 	<div class="content-text">
 {% block content %}
 {% endblock %}
+{% if page_obj.has_other_pages %}
 <nav class="list-pages">
     <ul>
         {% for p in paginator.page_range %}
-        <li class="page-num">
+        <li class="{% if p == page_obj.number %}page-num-selected{% else %}page-num{% endif %}">
             <a href="?page={{ p }}">{{ p }}</a>
         </li>
         {% endfor %}
     </ul>
 </nav>
+{% endif %}
 	</div>
 <!-- Конец блока контента -->
 

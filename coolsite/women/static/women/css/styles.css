@@ -408,7 +408,7 @@ ul.lang-list li a:hover {color: #fdc073;}
 	margin: 0 20px 0 0;
 }
 .list-pages a {
-	color: #000;
+	color: #000000;
 	font-size: 24px;
 	text-decoration: none;
 }
@@ -417,15 +417,14 @@ ul.lang-list li a:hover {color: #fdc073;}
 	width: 60px;
 	height: 44px;
 	padding: 16px 0 0 0;
-	border: 1px solid #d0d0d0;
+	border: 2px solid #000000;
 	border-radius: 30px;
 }
 .list-pages .page-num:hover {
 	box-shadow: 3px 3px 1px #d0d0d0;
 }
 .list-pages .page-num-selected {
-	border: none;
-	color: #000;
+	background-color: #fdc073;
 	font-size: 20px;
 }
 .list-pages .page-num-selected:hover {
