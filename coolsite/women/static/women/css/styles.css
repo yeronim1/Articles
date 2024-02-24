@@ -194,7 +194,7 @@ div.button {
 	margin: 0 20px 0 0;
 }
 .left-chapters ul li.share a.share-ig {
-	width: 100%;
+	width: 60px;
 	height: 60px;
 	background: url('../images/inst_icon.png') no-repeat 0 0
 }
@@ -421,11 +421,11 @@ ul.lang-list li a:hover {color: #fdc073;}
 	border-radius: 30px;
 }
 .list-pages .page-num:hover {
-	box-shadow: 3px 3px 1px #d0d0d0;
+	box-shadow: 3px 3px 1px #2a2727;
 }
 .list-pages .page-num-selected {
 	background-color: #fdc073;
-	font-size: 20px;
+	font-size: 24px;
 }
 .list-pages .page-num-selected:hover {
 	box-shadow: none;
