@@ -3,12 +3,11 @@ from .models import *
 
 menu = [{'title': 'About site', 'url_name': 'about'},
         {'title': 'Add page', 'url_name': 'add_page'},
-        {'title': 'Feedback', 'url_name': 'contact'},
-        {'title': 'Log in', 'url_name': 'login'}]
+        {'title': 'Feedback', 'url_name': 'contact'}]
 
 
 class DataMixin:
-    paginate_by = 3
+    paginate_by = 2
 
     def get_user_context(self, **kwargs):
         context = kwargs
