@@ -19,9 +19,15 @@
 {% for m in menu %}
 			<li><a href="{% url m.url_name %}">{{m.title}}</a></li>
 {% endfor %}
+            {% if request.user.is_authenticated %}
+            <li class="last">
+            <span class="header-text">{{ user.username }}</span> | <a href="{% url 'logout' %}">Log Out</a>
+            </li>
+            {% else %}
             <li class="last">
                 <a href="{% url 'register' %}">Registration</a> | <a href="{% url 'login' %}">Log In</a>
             </li>
+            {% endif %}
             </ul>
 			<div class="clear"></div>
 		</div>
@@ -30,7 +36,7 @@
 
 <table class="table-content" border=0 cellpadding="0" cellspacing="0">
 <tr>
-<!-- Sidebar слева -->
+<!-- Sidebar left -->
 	<td valign="top" class="left-chapters">
 	<ul id="leftchapters">
 {% if cat_selected == 0 %}
@@ -55,13 +61,13 @@
 		</li>
 	</ul>
 </td>
-<!-- Конец Sidebar'а -->
+<!-- Sidebar's end -->
 <td valign="top" class="content">
 	<!-- Хлебные крошки -->
 	{% block breadcrumbs %}
 	{% endblock %}
 
-<!-- Блок контента -->
+<!-- Block content -->
 	<div class="content-text">
 {% block content %}
 {% endblock %}
@@ -85,7 +91,7 @@
 </nav>
 {% endif %}
 	</div>
-<!-- Конец блока контента -->
+<!-- End block content -->
 
 </td></tr></table>
 </td></tr>
@@ -97,6 +103,6 @@
 			including paper is strictly prohibited.</p>
 	</div>
 </td></tr></table>
-<!-- Конец footer'а и страницы -->
+<!-- Footer`s end -->
 </body>
 </html>

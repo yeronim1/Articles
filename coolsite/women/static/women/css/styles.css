@@ -80,6 +80,11 @@ ul.list-articles li {
 	height: 60px;
 }
 
+.header-text {
+	color: #fdc073;
+
+}
+
 .logo {
 	background: url('../images/logotype.jpg') no-repeat 10px 5px;
 	width: 70px;
@@ -91,9 +96,10 @@ ul.mainmenu {
 	margin: 0;
 	padding: 0;
 	height: 60px;
-	color: #000000;
+	color: #c5c5c5;
 	font-size: 20px;
 	overflow: hidden;
+
 }
 
 ul.mainmenu li {
