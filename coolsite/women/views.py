@@ -1,11 +1,10 @@
-#from django.contrib.auth.models import User
+from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.core.paginator import Paginator
-from django.contrib.auth.forms import UserCreationForm
 
 
 from .forms import *
@@ -87,7 +86,7 @@ class WomenCategory(DataMixin, ListView):
 
 
 class RegisterUser(DataMixin, CreateView):
-    form_class = UserCreationForm
+    form_class = RegisterUserForm
     template_name = 'women/register.html'
     success_url = reverse_lazy('login')
 
