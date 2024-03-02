@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, FormView
 from django.contrib.auth import logout, login
 from django.shortcuts import redirect
 from django.http import HttpResponse, HttpResponseNotFound
@@ -49,8 +49,20 @@ class AddPage(LoginRequiredMixin, DataMixin, CreateView):
         c_def = self.get_user_context(title="Add page")
         return dict(list(context.items()) + list(c_def.items()))
 
-def contact(request):
-    return HttpResponse('Feedback')
+class ContactFormView(DataMixin, FormView):
+    form_class = ContactForm
+    template_name = 'women/contact.html'
+    success_url = reverse_lazy('home')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title="Feedback")
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        return redirect('home')
+
 
 def page_not_found(request, exception):
     return HttpResponseNotFound(f'<h1>Page Not Found</h1>')
