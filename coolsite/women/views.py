@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, FormView
 from django.contrib.auth import logout, login
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.http import HttpResponse, HttpResponseNotFound
 from django.views.generic import ListView, DetailView, CreateView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -11,8 +11,7 @@ from .forms import *
 from .models import *
 from .utils import *
 
-menu = [{'title': 'About site', 'url_name': 'about'},
-        {'title': 'Add page', 'url_name': 'add_page'},
+menu = [{'title': 'Add page', 'url_name': 'add_page'},
         {'title': 'Feedback', 'url_name': 'contact'},
         {'title': 'Log in', 'url_name': 'login'}]
 
@@ -29,13 +28,7 @@ class WomenHome(DataMixin, ListView):
     def get_queryset(self):
         return Women.objects.filter(is_published=True).select_related('cat')
 
-def about(request):
-    contact_list = Women.objects.all()
-    paginator = Paginator(contact_list, 3)
 
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    return render(request, 'women/about.html', {'page_obj': page_obj,'menu': menu, 'title': 'About page'})
 
 class AddPage(LoginRequiredMixin, DataMixin, CreateView):
     form_class = AddPostForm
